@@ -17,5 +17,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /srv/quqlab
-            git pull origin main
+            bash /srv/quqlab/deploy/deploy.sh
