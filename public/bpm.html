@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BPM 手动计数</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #fafafa;
+      font-family: 'Arial', sans-serif;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #ff6f91;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .bpm-display,
+    .bpm-int-display {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .count-display {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      background: #ff6f91;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px #d45c74;
+      transition: all 0.2s ease;
+      margin: 4px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px #d45c74;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>手动 BPM 计数器</h1>
+
+  <div class="bpm-display" id="bpm">BPM (小数): 0.00</div>
+  <div class="bpm-int-display" id="bpmInt">BPM (整数): 0</div>
+  <div class="count-display" id="count">次数: 0</div>
+
+  <div class="btn-container">
+    <button class="btn" id="hitBtn">左键 / 空格</button>
+    <button class="btn" id="resetBtn">重置</button>
+  </div>
+
+  <script>
+    let hitTimes = [];
+    let bpmDisplay = document.getElementById('bpm');
+    let bpmIntDisplay = document.getElementById('bpmInt');
+    let countDisplay = document.getElementById('count');
+    let timeoutId = null;
+
+    function resetCounter() {
+      hitTimes = [];
+      bpmDisplay.textContent = 'BPM (小数): 0.00';
+      bpmIntDisplay.textContent = 'BPM (整数): 0';
+      countDisplay.textContent = '次数: 0';
+    }
+
+    function recordHit() {
+      const now = performance.now();
+      hitTimes.push(now);
+
+      countDisplay.textContent = '次数: ' + hitTimes.length;
+
+      if (hitTimes.length > 1) {
+        let intervals = [];
+        for (let i = 1; i < hitTimes.length; i++) {
+          intervals.push(hitTimes[i] - hitTimes[i - 1]);
+        }
+        let avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+        let bpm = 60000 / avgInterval; // 毫秒转每分钟
+        bpmDisplay.textContent = 'BPM (小数): ' + bpm.toFixed(2);
+        bpmIntDisplay.textContent = 'BPM (整数): ' + Math.round(bpm);
+      } else {
+        bpmDisplay.textContent = 'BPM (小数): 0.00';
+        bpmIntDisplay.textContent = 'BPM (整数): 0';
+      }
+
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(resetCounter, 3000);
+    }
+
+    document.getElementById('hitBtn').addEventListener('click', recordHit);
+
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        recordHit();
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', resetCounter);
+  </script>
+
+</body>
+
+</html>
