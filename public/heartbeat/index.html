@@ -71,7 +71,7 @@
 
 <body>
 
-    <header>似了喵...</header>
+    <header id="statusHeader">似了喵...</header>
 
     <div class="container">
         <div id="devices">Loading...</div>
@@ -98,9 +98,11 @@
                 const data = await res.json();
 
                 const container = document.getElementById("devices");
+                const header = document.getElementById("statusHeader");
 
                 if (!Object.keys(data).length) {
                     document.title = "似了喵";
+                    header.textContent = "似了喵...";
                     container.innerHTML = "<p>No devices yet.</p>";
                     return;
                 }
@@ -116,30 +118,33 @@
                     if (isOnline) onlineCount++;
 
                     html += `
-        <div class="card">
-          <div>
-            <span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>
-            <strong>${id}</strong>
-          </div>
-          <div class="meta">
-            App: ${device.app_name}<br>
-            Last seen: ${formatTime(device.last_seen)}<br>
-            ${isOnline ? "Online" : "Offline"} (${seconds}s ago)
-          </div>
-        </div>
-      `;
+            <div class="card">
+                <div>
+                    <span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>
+                    <strong>${id}</strong>
+                </div>
+                <div class="meta">
+                    App: ${device.app_name}<br>
+                    Last seen: ${formatTime(device.last_seen)}<br>
+                    ${isOnline ? "Online" : "Offline"} (${seconds}s ago)
+                </div>
+            </div>
+            `;
                 }
 
                 container.innerHTML = html;
 
                 if (onlineCount > 0) {
                     document.title = `还活着 (${onlineCount})`;
+                    header.textContent = `还活着 (${onlineCount})`;
                 } else {
                     document.title = "似了喵";
+                    header.textContent = "似了喵...";
                 }
 
             } catch (err) {
                 document.title = "炸了";
+                document.getElementById("statusHeader").textContent = "炸了";
                 document.getElementById("devices").innerHTML = "Error loading data.";
             }
         }
