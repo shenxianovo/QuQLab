@@ -79,6 +79,8 @@
     </div>
 
     <script>
+        const API_URL = "/heartbeat/api/status";
+        const OFFLINE_THRESHOLD = 60;
 
         function secondsSince(dateString) {
             const last = new Date(dateString);
