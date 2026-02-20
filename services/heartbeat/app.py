@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from datetime import datetime, timezone
+import time
 import json
 import os
 
@@ -29,7 +29,7 @@ def heartbeat():
 
     devices[data["device_id"]] = {
         "app_name": data["app_name"],
-        "last_seen": datetime.now(timezone.utc).isoformat()
+        "last_seen": time.time(),
     }
 
     save_data(devices)

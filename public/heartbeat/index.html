@@ -82,10 +82,14 @@
         const API_URL = "/heartbeat/api/status";
         const OFFLINE_THRESHOLD = 60;
 
-        function secondsSince(dateString) {
-            const last = new Date(dateString);
-            const now = new Date();
-            return Math.floor((now - last) / 1000);
+        function secondsSince(ts) {
+            const now = Date.now() / 1000;
+            return Math.floor(now - ts);
+        }
+
+        function formatTime(ts) {
+            const d = new Date(ts * 1000);
+            return d.toLocaleString();
         }
 
         async function loadStatus() {
@@ -119,7 +123,7 @@
           </div>
           <div class="meta">
             App: ${device.app_name}<br>
-            Last seen: ${device.last_seen}<br>
+            Last seen: ${formatTime(device.last_seen)}<br>
             ${isOnline ? "Online" : "Offline"} (${seconds}s ago)
           </div>
         </div>
