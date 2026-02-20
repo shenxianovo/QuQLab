@@ -10,6 +10,6 @@ fi
 source venv/bin/activate
 pip install -r requirements.txt
 
-pkill -f "services/heartbeat/app.py" || true
+fuser -k 5001/tcp || true
 
 nohup venv/bin/python app.py > heartbeat.log 2>&1 &
