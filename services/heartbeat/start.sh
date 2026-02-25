@@ -20,6 +20,8 @@ if [ -f "$PID_FILE" ]; then
     rm -f "$PID_FILE"
 fi
 
+whoami
+
 # ==== 更新代码 ====
 cd "$APP_DIR"
 echo "Pulling latest code..."
