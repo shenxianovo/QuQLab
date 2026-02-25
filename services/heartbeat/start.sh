@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+source ~/.bashrc
+
 # ==== 配置区域 ====
 APP_NAME="heartbeat"
 APP_DIR="/srv/heartbeat"
@@ -19,8 +21,6 @@ if [ -f "$PID_FILE" ]; then
     fi
     rm -f "$PID_FILE"
 fi
-
-whoami
 
 # ==== 更新代码 ====
 cd "$APP_DIR"
