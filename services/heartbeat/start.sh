@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-source ~/.bashrc
-
 # ==== 配置区域 ====
 APP_NAME="heartbeat"
 APP_DIR="/srv/heartbeat"
