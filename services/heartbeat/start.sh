@@ -1,15 +1,36 @@
 #!/bin/bash
 set -e
 
-cd /srv/quqlab/services/heartbeat
+# ==== 配置区域 ====
+APP_NAME="heartbeat"
+APP_DIR="/srv/heartbeat"
+DOTNET_PROJECT="server/server.csproj"
+DOTNET_ENV="Production"
+LOG_FILE="$APP_DIR/$APP_NAME.log"
+PID_FILE="$APP_DIR/$APP_NAME.pid"
 
-if [ ! -d "venv" ]; then
-    python3 -m venv venv
+# ==== 停止服务 ====
+if [ -f "$PID_FILE" ]; then
+    PID=$(cat "$PID_FILE")
+    if ps -p $PID > /dev/null; then
+        echo "Stopping existing service (PID $PID)..."
+        kill $PID
+        sleep 2
+    fi
+    rm -f "$PID_FILE"
 fi
 
-source venv/bin/activate
-pip install -r requirements.txt
+# ==== 更新代码 ====
+cd "$APP_DIR"
+echo "Pulling latest code..."
+git reset --hard origin/main
+git pull origin main
 
-fuser -k 5001/tcp || true
+# ==== 启动服务 ====
+echo "Starting service..."
+nohup dotnet run --project "$DOTNET_PROJECT" --environment $DOTNET_ENV > "$LOG_FILE" 2>&1 &
 
-nohup venv/bin/python app.py > heartbeat.log 2>&1 &
+# 记录 PID
+echo $! > "$PID_FILE"
+
+echo "Service started (PID $(cat $PID_FILE)), logs: $LOG_FILE"
