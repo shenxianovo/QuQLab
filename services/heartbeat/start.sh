@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+export NVM_DIR="/home/shenxianovo/.nvm"
+source "$NVM_DIR/nvm.sh"
+nvm use 20
+
 # ==== 配置区域 ====
 APP_NAME="heartbeat"
 APP_DIR="/srv/heartbeat"
