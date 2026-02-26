@@ -6,6 +6,7 @@ APP_NAME="heartbeat"
 APP_DIR="/srv/heartbeat"
 DOTNET_PROJECT="server/server.csproj"
 DOTNET_ENV="Production"
+VUE_PROJECT="web"
 LOG_FILE="$APP_DIR/$APP_NAME.log"
 PID_FILE="$APP_DIR/$APP_NAME.pid"
 
@@ -28,6 +29,7 @@ git pull origin main
 
 # ==== 启动服务 ====
 echo "Starting service..."
+npm run build --prefix "$VUE_PROJECT"
 nohup dotnet run --project "$DOTNET_PROJECT" --environment $DOTNET_ENV > "$LOG_FILE" 2>&1 &
 
 # 记录 PID
