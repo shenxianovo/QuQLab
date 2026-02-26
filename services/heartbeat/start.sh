@@ -33,7 +33,9 @@ git pull origin main
 
 # ==== 启动服务 ====
 echo "Starting service..."
+npm ci --prefix "$VUE_PROJECT"
 npm run build --prefix "$VUE_PROJECT"
+
 nohup dotnet run --project "$DOTNET_PROJECT" --environment $DOTNET_ENV > "$LOG_FILE" 2>&1 &
 
 # 记录 PID
