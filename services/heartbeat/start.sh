@@ -8,7 +8,7 @@ nvm use 20
 # ==== 配置区域 ====
 APP_NAME="heartbeat"
 APP_DIR="/srv/heartbeat"
-DOTNET_PROJECT="=desktop/Heartbeat.Server/Heartbeat.Server.csproj"
+DOTNET_PROJECT="=server/Heartbeat.Server/Heartbeat.Server.csproj"
 DOTNET_ENV="Production"
 VUE_PROJECT="frontend"
 LOG_FILE="$APP_DIR/$APP_NAME.log"
