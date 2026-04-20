@@ -270,3 +270,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node / Vue app
+app/node_modules/
+app/dist/

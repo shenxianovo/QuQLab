@@ -1,0 +1,61 @@
+# 个人信息
+profile:
+  name: -QuQ-
+  title: 全栈冒险者
+  birthday: "2005-08-16"
+  avatar: terminal
+
+# 能力属性（0-100）
+stats:
+- key: coding
+  label: 阿巴阿巴
+  code: COD
+  icon: code
+  value: 85
+
+# 技能列表
+skills:
+- C#
+- WinUI3
+- ASP.NET Core
+- Python
+- TypeScript
+- Vue.js
+- PostgreSQL
+- AI/ML
+- Linux
+- Nginx
+
+# 技能树进度（0-100）
+skillProgress: 65
+
+# 成就列表
+achievements:
+- title: HELLO WORLD!
+  description: 写下第一行 Hello World
+  icon: sprout
+
+# 成就总数（用于进度条计算）
+achievementsTotal:
+
+# 综合评估
+evaluation:
+  rank: A
+  comment: 可独立作战的干员
+
+# 快捷链接
+links:
+- label: 视奸
+  href: heartbeat/
+
+- label: 认证
+  href: https://auth.shenxianovo.com
+
+- label: 博客
+  href: https://blog.shenxianovo.com
+
+- label: SBTI
+  href: SBTI.html
+
+# 站点标识
+siteLabel: shenxianovo

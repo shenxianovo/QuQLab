@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #141414;
+  color: #f0f0f0;
+  font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #141414; }
+::-webkit-scrollbar-thumb { background: #444; }
+
+/* ========== 斜切角 ========== */
+.clip-cut-bl {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.clip-cut-tr {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+.clip-cut-dual {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+/* ========== 拓扑线背景 ========== */
+.topo-bg {
+  background-image:
+    radial-gradient(ellipse at 70% 40%, rgba(232, 224, 0, 0.03) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg width='800' height='800' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 400 Q200 280 400 340 Q600 400 750 280' fill='none' stroke='%23ffffff' stroke-width='0.6' opacity='0.04'/%3E%3Cpath d='M0 520 Q250 400 450 480 Q650 560 800 440' fill='none' stroke='%23ffffff' stroke-width='0.6' opacity='0.035'/%3E%3Cpath d='M100 150 Q300 80 500 160 Q700 240 800 140' fill='none' stroke='%23ffffff' stroke-width='0.6' opacity='0.03'/%3E%3Cpath d='M0 650 Q200 580 400 630 Q600 680 800 600' fill='none' stroke='%23ffffff' stroke-width='0.6' opacity='0.04'/%3E%3Cpath d='M50 250 Q250 180 450 260 Q650 340 750 230' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.025'/%3E%3Cpath d='M100 50 Q300 20 500 70 Q700 120 800 50' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.02'/%3E%3Cpath d='M0 750 Q200 700 400 740 Q600 780 800 720' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+}
+
+/* ========== 工业标签 ========== */
+.tag-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+/* ========== 进度条 ========== */
+.ark-bar {
+  height: 4px;
+  background: #333;
+  overflow: hidden;
+}
+.ark-bar-fill {
+  height: 100%;
+  background: #e8e000;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ========== 按钮 ========== */
+.ark-btn {
+  background: #242424;
+  border: 1px solid #444;
+  color: #f0f0f0;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ark-btn:hover {
+  background: #2a2a2a;
+  border-color: #e8e000;
+  color: #e8e000;
+}
+.ark-btn:active {
+  background: #1a1a1a;
+  transform: scale(0.98);
+}
+
+/* ========== 角标装饰 ========== */
+.corner-mark {
+  position: relative;
+}
+.corner-mark::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #e8e000;
+  border-right: 2px solid #e8e000;
+  pointer-events: none;
+}
+.corner-mark::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #444;
+  border-left: 2px solid #444;
+  pointer-events: none;
+}
+
+/* ========== 点阵 ========== */
+.grid-dots {
+  background-image: radial-gradient(circle, #2a2a2a 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
