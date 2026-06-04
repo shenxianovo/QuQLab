@@ -6,19 +6,20 @@ cd /srv/quqlab
 git reset --hard origin/main
 git pull origin main
 
-# 2. 同步 nginx 配置(sites-available 为源,按文件夹对应服务器布局)
+# 2. 同步 nginx 配置(rsync 镜像 sites-available,仓库为唯一源)
+SRC=/srv/quqlab/deploy/nginx/sites-available/
+DST=/etc/nginx/sites-available/
 
-# 主站 shenxianovo.com
-sudo cp /srv/quqlab/deploy/nginx/sites-available/main.conf /etc/nginx/sites-available/main.conf
-sudo ln -sf /etc/nginx/sites-available/main.conf /etc/nginx/sites-enabled/main.conf
+# 只镜像 *.conf:服务器上多余的 .conf 会被删除,非 .conf 的发行版文件保留
+sudo rsync -a --delete --include='*.conf' --exclude='*' "$SRC" "$DST"
 
-# chat.shenxianovo.com -> chat 后端容器
-sudo cp /srv/quqlab/deploy/nginx/sites-available/chat.conf /etc/nginx/sites-available/chat.conf
-sudo ln -sf /etc/nginx/sites-available/chat.conf /etc/nginx/sites-enabled/chat.conf
+# 按 sites-available 中的 .conf 重建 sites-enabled 软链
+for conf in "$DST"*.conf; do
+    sudo ln -sf "$conf" "/etc/nginx/sites-enabled/$(basename "$conf")"
+done
 
-# auth.shenxianovo.com 入口(TLS 终止 -> 前端容器),宿主 nginx 统一在此同步
-sudo cp /srv/quqlab/deploy/nginx/sites-available/auth.conf /etc/nginx/sites-available/auth.conf
-sudo ln -sf /etc/nginx/sites-available/auth.conf /etc/nginx/sites-enabled/auth.conf
+# 清理 sites-enabled 中的失效软链(源 .conf 已被 rsync 删除,如旧 quqlab.conf)
+sudo find /etc/nginx/sites-enabled/ -xtype l -delete
 
 # 3. 测试 nginx 配置
 sudo nginx -t
